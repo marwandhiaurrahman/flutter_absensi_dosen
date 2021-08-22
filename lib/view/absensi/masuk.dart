@@ -35,6 +35,7 @@ class _AbsensiMasukState extends State<AbsensiMasuk> {
   String _timeString;
 
   Future _scan() async {
+    _getLocation();
     await Permission.camera.request();
     String barcode = await scanner.scan();
     if (barcode == null) {
