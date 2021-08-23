@@ -36,7 +36,12 @@ class _FrontLayerState extends State<FrontLayer> {
             return Center(
               child: Text('Error : ' + snapshot.error.toString()),
             );
-          } else if (snapshot.connectionState == ConnectionState.done) {
+          } else if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            // print('snapshot data ' + snapshot.data.toString());
             User user = snapshot.data.user;
             List<Jadwal> jadwaltodays = snapshot.data.jadwaltodays;
             List<Jadwal> jadwalaktif = snapshot.data.jadwalaktif;
@@ -171,10 +176,7 @@ class _FrontLayerState extends State<FrontLayer> {
               ),
             );
             // return
-          } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+
           }
         });
   }

@@ -29,7 +29,11 @@ class _BackLayerState extends State<BackLayer> {
             return Center(
               child: Text('Error : ' + snapshot.error.toString()),
             );
-          } else if (snapshot.connectionState == ConnectionState.done) {
+          } else if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
             User user = snapshot.data.user;
             return Container(
               margin: EdgeInsets.all(spBlock * 0.5),
@@ -168,10 +172,7 @@ class _BackLayerState extends State<BackLayer> {
               ),
             );
             // return
-          } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+
           }
         });
   }

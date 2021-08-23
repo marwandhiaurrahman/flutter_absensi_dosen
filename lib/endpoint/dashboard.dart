@@ -5,7 +5,7 @@
 import 'dart:convert';
 
 Dasboard dasboardFromJson(String str) =>
-    Dasboard.fromJson(json.decode(str)['data']);
+    Dasboard.fromJson(jsonDecode(str)['data']);
 
 String dasboardToJson(Dasboard data) => json.encode(data.toJson());
 
@@ -53,13 +53,13 @@ class Jadwal {
     this.absensi,
   });
 
-  int id;
+  dynamic id;
   String kode;
   String hari;
   String jam;
-  int matkulId;
-  int ruanganId;
-  int kelasId;
+  dynamic matkulId;
+  dynamic ruanganId;
+  dynamic kelasId;
   DateTime createdAt;
   DateTime updatedAt;
   Matkul matkul;
@@ -123,7 +123,7 @@ class Absensi {
     this.updatedAt,
   });
 
-  int id;
+  dynamic id;
   String pertemuan;
   DateTime tanggal;
   Metode metode;
@@ -131,7 +131,7 @@ class Absensi {
   String masuk;
   String keluar;
   double jarak;
-  int jadwalId;
+  dynamic jadwalId;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -180,10 +180,10 @@ class Jamkul {
     this.updatedAt,
   });
 
-  int id;
+  dynamic id;
   String masuk;
   String keluar;
-  int sks;
+  dynamic sks;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -217,11 +217,11 @@ class Kelas {
     this.updatedAt,
   });
 
-  int id;
+  dynamic id;
   String name;
   String kode;
   String tahun;
-  int prodiId;
+  dynamic prodiId;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -257,10 +257,10 @@ class Matkul {
     this.dosen,
   });
 
-  int id;
+  dynamic id;
   String name;
   String kode;
-  int userId;
+  dynamic userId;
   DateTime createdAt;
   DateTime updatedAt;
   User dosen;
@@ -297,7 +297,7 @@ class User {
     this.updatedAt,
   });
 
-  int id;
+  dynamic id;
   String name;
   String email;
   dynamic emailVerifiedAt;
@@ -337,11 +337,11 @@ class Ruangan {
     this.updatedAt,
   });
 
-  int id;
+  dynamic id;
   String name;
-  int lantai;
+  dynamic lantai;
   String kode;
-  int gedungId;
+  dynamic gedungId;
   DateTime createdAt;
   DateTime updatedAt;
 
