@@ -41,7 +41,7 @@ class _FrontLayerState extends State<FrontLayer> {
               child: CircularProgressIndicator(),
             );
           } else {
-            // print('snapshot data ' + snapshot.data.toString());
+            print('snapshot data ' + snapshot.data.toString());
             User user = snapshot.data.user;
             List<Jadwal> jadwaltodays = snapshot.data.jadwaltodays;
             List<Jadwal> jadwalaktif = snapshot.data.jadwalaktif;

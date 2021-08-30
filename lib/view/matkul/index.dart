@@ -224,7 +224,7 @@ class AbsensiDataSource extends DataTableSource {
       DataCell(Text(absensi.pembahasan.toString())),
       DataCell(Text(absensi.masuk.toString())),
       DataCell(Text(absensi.keluar.toString())),
-      DataCell(Text(absensi.jarak.ceil().toString() + ' m')),
+      DataCell(Text(absensi.jarak.toString() + ' m')),
     ]);
   }
 

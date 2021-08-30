@@ -39,7 +39,7 @@ class AbsensiElement {
     @required this.updatedAt,
   });
 
-  int id;
+  dynamic id;
   String pertemuan;
   DateTime tanggal;
   String metode;
@@ -47,8 +47,8 @@ class AbsensiElement {
   String pembahasan;
   String masuk;
   String keluar;
-  double jarak;
-  int jadwalId;
+  dynamic jarak;
+  dynamic jadwalId;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -61,7 +61,7 @@ class AbsensiElement {
         pembahasan: json["pembahasan"],
         masuk: json["masuk"],
         keluar: json["keluar"] == null ? null : json["keluar"],
-        jarak: json["jarak"].toDouble(),
+        jarak: json["jarak"],
         jadwalId: json["jadwal_id"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),

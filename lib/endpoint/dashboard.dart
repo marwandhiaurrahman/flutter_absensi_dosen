@@ -5,7 +5,7 @@
 import 'dart:convert';
 
 Dasboard dasboardFromJson(String str) =>
-    Dasboard.fromJson(jsonDecode(str)['data']);
+    Dasboard.fromJson(json.decode(str)['data']);
 
 String dasboardToJson(Dasboard data) => json.encode(data.toJson());
 
@@ -57,9 +57,9 @@ class Jadwal {
   String kode;
   String hari;
   String jam;
-  dynamic matkulId;
-  dynamic ruanganId;
-  dynamic kelasId;
+  String matkulId;
+  String ruanganId;
+  String kelasId;
   DateTime createdAt;
   DateTime updatedAt;
   Matkul matkul;
@@ -113,6 +113,7 @@ class Absensi {
     this.id,
     this.pertemuan,
     this.tanggal,
+    this.ruangan,
     this.metode,
     this.pembahasan,
     this.masuk,
@@ -126,12 +127,13 @@ class Absensi {
   dynamic id;
   String pertemuan;
   DateTime tanggal;
-  Metode metode;
+  String ruangan;
+  String metode;
   String pembahasan;
   String masuk;
-  String keluar;
-  double jarak;
-  dynamic jadwalId;
+  dynamic keluar;
+  String jarak;
+  String jadwalId;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -139,11 +141,12 @@ class Absensi {
         id: json["id"],
         pertemuan: json["pertemuan"],
         tanggal: DateTime.parse(json["tanggal"]),
-        metode: metodeValues.map[json["metode"]],
+        ruangan: json["ruangan"],
+        metode: json["metode"],
         pembahasan: json["pembahasan"],
         masuk: json["masuk"],
-        keluar: json["keluar"] == null ? null : json["keluar"],
-        jarak: json["jarak"].toDouble(),
+        keluar: json["keluar"],
+        jarak: json["jarak"],
         jadwalId: json["jadwal_id"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
@@ -154,21 +157,17 @@ class Absensi {
         "pertemuan": pertemuan,
         "tanggal":
             "${tanggal.year.toString().padLeft(4, '0')}-${tanggal.month.toString().padLeft(2, '0')}-${tanggal.day.toString().padLeft(2, '0')}",
-        "metode": metodeValues.reverse[metode],
+        "ruangan": ruangan,
+        "metode": metode,
         "pembahasan": pembahasan,
         "masuk": masuk,
-        "keluar": keluar == null ? null : keluar,
+        "keluar": keluar,
         "jarak": jarak,
         "jadwal_id": jadwalId,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
       };
 }
-
-enum Metode { E_CLASS, TATAP_MUKA }
-
-final metodeValues =
-    EnumValues({"E-Class": Metode.E_CLASS, "Tatap Muka": Metode.TATAP_MUKA});
 
 class Jamkul {
   Jamkul({
@@ -183,7 +182,7 @@ class Jamkul {
   dynamic id;
   String masuk;
   String keluar;
-  dynamic sks;
+  String sks;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -221,7 +220,7 @@ class Kelas {
   String name;
   String kode;
   String tahun;
-  dynamic prodiId;
+  String prodiId;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -260,7 +259,7 @@ class Matkul {
   dynamic id;
   String name;
   String kode;
-  dynamic userId;
+  String userId;
   DateTime createdAt;
   DateTime updatedAt;
   User dosen;
@@ -332,6 +331,7 @@ class Ruangan {
     this.name,
     this.lantai,
     this.kode,
+    this.location,
     this.gedungId,
     this.createdAt,
     this.updatedAt,
@@ -339,9 +339,10 @@ class Ruangan {
 
   dynamic id;
   String name;
-  dynamic lantai;
+  String lantai;
   String kode;
-  dynamic gedungId;
+  Location location;
+  String gedungId;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -350,6 +351,7 @@ class Ruangan {
         name: json["name"],
         lantai: json["lantai"],
         kode: json["kode"],
+        location: Location.fromJson(json["location"]),
         gedungId: json["gedung_id"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
@@ -360,22 +362,30 @@ class Ruangan {
         "name": name,
         "lantai": lantai,
         "kode": kode,
+        "location": location.toJson(),
         "gedung_id": gedungId,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
       };
 }
 
-class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String> reverseMap;
+class Location {
+  Location({
+    this.type,
+    this.coordinates,
+  });
 
-  EnumValues(this.map);
+  String type;
+  List<dynamic> coordinates;
 
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
-    }
-    return reverseMap;
-  }
+  factory Location.fromJson(Map<String, dynamic> json) => Location(
+        type: json["type"],
+        coordinates:
+            List<dynamic>.from(json["coordinates"].map((x) => x.toDouble())),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "type": type,
+        "coordinates": List<dynamic>.from(coordinates.map((x) => x)),
+      };
 }
